@@ -8,15 +8,13 @@
 =head1 SYNOPSIS
 
 B<openca-ocspd>
-[B<-d>]
-[B<-p n>]
-[B<-b address>]
 [B<-c file>]
-[B<-md digest>]
-[B<-k passwd>]
-[B<-i passin>]
-[B<-e engine>]
+[B<-d>]
 [B<-r chroot_dir>]
+[B<-k pwd>]
+[B<-debug>]
+[B<-testmode>]
+[B<-stdout>]
 [B<-v>]
 
 =head1 DESCRIPTION
@@ -45,36 +43,35 @@ to every IP available (equal to '*' value).
 =item B<-c file>
 
 specifies the configuration file to be loaded. Default file loaded
-is B</usr/local/etc/ocspd.conf>.
+is B</usr/etc/ocspd/ocspd.xml>.
 
-=item B<-md digest>
+=item B<-d>
 
-specifies the digest to be used when generating responses. Default is
-sha1.
-
-=item B<-k passwd>
-
-specifies the password to be used when loading the private key.
-
-=item B<-i passin>
-
-the key password source. For more information about the format of B<arg>
-see the B<PASS PHRASE ARGUMENTS> section in L<openssl(1)|openssl(1)>.
-
-=item B<-engine id>
-
-specifying an engine (by it's unique B<id> string) will cause the responder
-to attempt to obtain a functional reference to the specified engine,
-thus initialising it if needed. The engine will then be set as the default
-for all available algorithms.
+Run as Daemon (detach from the current console)
 
 =item B<-r chroot_dir>
 
 Chroot the application into the specified directory.
 
+=item B<-k pwd>
+
+Password used to protect the private key (if any)
+
+=item B<-debug>
+
+Debug Mode (kills process after the first request)
+
+=item B(-testmode)
+
+Use test mode (wrong signatures with 1st bit flipped)
+
+=item B(-stdout)
+
+Route all logging messages to stdout
+
 =item B<-v>
 
-this prints extra details about the operations being performed.
+Verbose output (prints extra details about the operations being performed)
 
 =back
 
@@ -94,7 +91,7 @@ To reload the certificate's db simply send a SIGHUP to the main process
 
 =over 4
 
-	openca-ocspd -c contrib/ocspd.conf 
+	openca-ocspd -c /usr/erc/ocspd/ocspd.xml
 
 =back
 
